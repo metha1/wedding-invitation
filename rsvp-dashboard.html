@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding RSVP Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Wedding RSVP Dashboard</h1>
+
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">RSVP Responses</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="loading" class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div id="rsvp-list" class="d-none">
+                            <div id="stats" class="mb-4"></div>
+                            <div id="rsvp-items"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadRSVPs() {
+            try {
+                const response = await fetch('/.netlify/functions/get-rsvps');
+                const rsvps = await response.json();
+
+                displayRSVPs(rsvps);
+            } catch (error) {
+                console.error('Failed to load RSVPs:', error);
+                document.getElementById('loading').innerHTML = '<p class="text-danger">Failed to load RSVPs. Check server connection.</p>';
+            }
+        }
+
+        function displayRSVPs(rsvps) {
+            document.getElementById('loading').classList.add('d-none');
+            document.getElementById('rsvp-list').classList.remove('d-none');
+
+            // Calculate stats
+            const total = rsvps.length;
+            const attending = rsvps.filter(r => r.attendance === 'Will Attend').length;
+            const notAttending = rsvps.filter(r => r.attendance === 'Cannot Attend').length;
+            const totalGuests = rsvps.reduce((sum, r) => sum + parseInt(r.count), 0);
+
+            document.getElementById('stats').innerHTML = `
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h3 class="text-primary">${total}</h3>
+                        <p>Total RSVPs</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-success">${attending}</h3>
+                        <p>Will Attend</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-danger">${notAttending}</h3>
+                        <p>Cannot Attend</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-info">${totalGuests}</h3>
+                        <p>Total Guests</p>
+                    </div>
+                </div>
+                <hr>
+            `;
+
+            // Display individual RSVPs
+            const rsvpItems = rsvps.map(rsvp => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="card-title">${rsvp.name}</h6>
+                                <p class="card-text mb-1"><strong>Guests:</strong> ${rsvp.count}</p>
+                                <p class="card-text mb-1"><strong>Attendance:</strong>
+                                    <span class="badge ${rsvp.attendance === 'Will Attend' ? 'bg-success' : 'bg-danger'}">${rsvp.attendance}</span>
+                                </p>
+                                ${rsvp.message ? `<p class="card-text mb-1"><strong>Message:</strong> ${rsvp.message}</p>` : ''}
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <small class="text-muted">${new Date(rsvp.timestamp).toLocaleString()}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('rsvp-items').innerHTML = rsvpItems || '<p class="text-muted text-center">No RSVPs yet.</p>';
+        }
+
+        // Load RSVPs when page loads
+        loadRSVPs();
+
+        // Refresh every 30 seconds
+        setInterval(loadRSVPs, 30000);
+    </script>
+</body>
+</html>

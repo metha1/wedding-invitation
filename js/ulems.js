@@ -156,6 +156,15 @@ if (rsvpForm) {
       const rsvps = JSON.parse(localStorage.getItem('wedding_rsvps') || '[]');
       rsvps.push(rsvp);
       localStorage.setItem('wedding_rsvps', JSON.stringify(rsvps));
+
+      // Send RSVP data to Netlify function
+      fetch('/.netlify/functions/rsvp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rsvp)
+      }).catch(err => console.log('Server notification failed, but RSVP saved locally'));
     } catch (err) {
       console.error('RSVP save error:', err);
     }
