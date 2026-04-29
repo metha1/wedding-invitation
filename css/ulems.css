@@ -120,6 +120,8 @@ section h2 {
   border-top: 8px solid var(--gold);
   border-bottom: 8px solid var(--gold);
   position: relative;
+  padding-bottom: 2rem;
+  padding-top: 1rem;
 }
 
 .hero-section::before {
@@ -139,11 +141,7 @@ section h2 {
   transition: transform 0.3s ease;
   border-color: var(--gold) !important;
   border-width: 3px !important;
-}
-
-.countdown-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    margin-bottom: 1.5rem;
 }
 
 .countdown-box p {
@@ -259,10 +257,31 @@ img.rounded-circle:hover {
 
   .countdown-box {
     padding: 1rem 1.5rem !important;
+    max-width: calc(100% - 2rem) !important;
+    margin: 0 auto !important;
   }
 
   .countdown-box p {
     font-size: 1.3rem !important;
+  }
+
+  .countdown-box .countdown-note {
+    font-size: 0.85rem !important;
+    margin-top: 0.75rem;
+  }
+
+  .open-invitation-btn {
+    font-size: 1rem !important;
+    padding: 14px 28px !important;
+    max-width: 320px !important;
+    width: 100% !important;
+  }
+
+  .row.justify-content-center .col-md-6.text-center .btn-outline-danger {
+    display: block !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto !important;
   }
 
   section h2 {
