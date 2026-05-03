@@ -179,3 +179,23 @@ if (rsvpForm) {
     rsvpForm.reset();
   });
 }
+
+// RSVP Toggle Handler
+const rsvpToggleBtn = document.getElementById('rsvp-toggle-btn');
+const rsvpSection = document.getElementById('rsvp');
+
+if (rsvpToggleBtn && rsvpSection) {
+  rsvpToggleBtn.addEventListener('click', () => {
+    const isHidden = rsvpSection.style.display === 'none';
+    
+    if (isHidden) {
+      rsvpSection.style.display = 'block';
+      rsvpToggleBtn.innerHTML = '<i class="fas fa-envelope me-2"></i>Hide RSVP <i class="fas fa-chevron-up ms-2"></i>';
+      // Scroll to RSVP section
+      rsvpSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      rsvpSection.style.display = 'none';
+      rsvpToggleBtn.innerHTML = '<i class="fas fa-envelope me-2"></i>RSVP <i class="fas fa-chevron-down ms-2"></i>';
+    }
+  });
+}
