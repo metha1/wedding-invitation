@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Redirecting to Invitation</title>
-    <meta http-equiv="refresh" content="0; url=./invitation.html" />
+    <meta http-equiv="refresh" content="0; url=../invitation.html" />
     <script>
-      const target = './invitation.html' + window.location.search;
+      const target = '../invitation.html' + window.location.search;
       document.addEventListener('DOMContentLoaded', () => {
         const fallbackLink = document.getElementById('redirect-link');
         if (fallbackLink) fallbackLink.href = target;
@@ -15,6 +15,6 @@
     </script>
   </head>
   <body>
-    <p>Redirecting to <a id="redirect-link" href="./invitation.html">invitation page</a>…</p>
+    <p>Redirecting to <a id="redirect-link" href="../invitation.html">invitation page</a>…</p>
   </body>
 </html>

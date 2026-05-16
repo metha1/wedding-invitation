@@ -1,60 +1,187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Wedding Invitation — Metha & Mounikasree</title>
-    <style>
-      html,body{height:100%;margin:0;font-family: Georgia, 'Times New Roman', serif;background:linear-gradient(180deg,#fffafc 0%,#f3eef3 100%);}
-      .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px}
-      .card{width:920px;max-width:95%;background:rgba(255,255,255,0.85);box-shadow:0 8px 24px rgba(0,0,0,0.12);border-radius:6px;padding:28px;border:1px solid rgba(0,0,0,0.04)}
-      .header{display:flex;align-items:center;justify-content:space-between}
-      .title{font-size:28px;color:#2b2b2b;font-weight:700;letter-spacing:1px}
-      .names{font-size:42px;font-weight:700;color:#2a2a2a;margin-top:10px;text-align:center}
-      .names .heart{color:#000;margin:0 8px}
-      .top-right{max-width:360px;text-align:right;color:#333;font-style:italic}
-      .details{display:flex;gap:24px;margin-top:28px;align-items:flex-start}
-      .left{flex:1}
-      .venue{font-weight:700;margin-top:12px}
-      .qr{width:120px;height:120px;background:#eee;display:inline-block;border:1px dashed #ccc;padding:8px}
-      .footer-note{margin-top:20px;color:#666;font-size:14px}
-      .date-time{font-weight:700}
-      @media (max-width:720px){.header{flex-direction:column;align-items:center}.top-right{text-align:center;margin-top:18px}}
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Metha & Mounikasree — Wedding Invitation</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&display=swap">
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+    <link rel="stylesheet" href="css/ulems.css">
   </head>
   <body>
-    <div class="wrap">
-      <div class="card">
-        <div class="header">
-          <div>
-            <div class="title">Wedding Reception Invitation</div>
-            <div class="names">Metha <span class="heart">❤</span> Mounikasree</div>
-          </div>
-          <div class="top-right">
-            "Destiny brought them together and now love will seal their Bond... Forever"
-            <div style="margin-top:10px;font-weight:700;font-size:15px">We're getting married!</div>
-          </div>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+      <div class="splash-content">
+        <div class="invitation-logo" style="text-align: center; margin-bottom: 30px;">
+          <i class="fas fa-envelope" style="font-size: 80px; color: #d4af37; animation: bounce 1s infinite;"></i>
         </div>
-
-        <div class="details">
-          <div class="left">
-            <div style="font-size:18px;margin-top:6px">On Friday, <strong>29 May 2026</strong></div>
-            <div class="date-time" style="margin-top:6px">From 12:00 pm to 3:00 pm</div>
-            <div class="venue" style="margin-top:14px">Venue:</div>
-            <div> SAKTHI WEIGH BRIDGE MARRIAGE HALL</div>
-            <div>Moolapathai, Edappadi - Kalvadangam Road,</div>
-            <div>Tamilnadu - 637101</div>
-
-            <div class="footer-note">We look forward to celebrating with you.</div>
-          </div>
-
-          <div style="width:220px;text-align:center">
-            <div style="font-weight:700;margin-bottom:12px">Invitation Card</div>
-            <div class="qr" title="QR code placeholder">QR</div>
-            <div style="margin-top:12px;font-size:14px;color:#444">Scan for RSVP / Directions</div>
-          </div>
-        </div>
+        <button id="open-invitation-btn" class="open-invitation-btn" onclick="document.getElementById('splash-screen').style.display='none'; document.getElementById('main-content').style.display='block'; document.getElementById('bgm').play().catch(e => console.log('Play error:', e)); if(window.AOS) AOS.init({duration:1000, once:false});">
+          <i class="fas fa-envelope-open-text me-2"></i>Open Invitation
+        </button>
+        <p id="splash-guest-name" class="splash-guest-name" style="display: none; margin-top: 15px; font-size: 1.1rem; color: #d4af37; font-weight: 600;"></p>
+        <p class="splash-text">You are cordially invited to our wedding celebration</p>
       </div>
     </div>
+
+    <div class="container-fluid p-0 m-0" id="main-content" style="display: none;">
+      <!-- Hero Section -->
+      <section id="hero" class="hero-section d-flex align-items-center justify-content-center position-relative overflow-hidden" style="min-height: 100vh; background: linear-gradient(135deg, #fffafc 0%, #f3eef3 100%);">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-image: url('assets/images/banner.webp'); background-size: cover; background-position: center; opacity: 0.1; z-index: 0;"></div>
+
+        <div class="text-center position-relative z-2">
+          <p id=\"greeting-hero\" class=\"greeting-small mb-2\" style=\"font-size: 1.1rem; color: #8b0000;\">Together with great joy,</p>
+          <h1 class=\"font-esthetic mb-3\" style=\"font-size: 3.5rem; font-weight: 700; color: #8b0000;\">Metha & Mounikasree</h1>
+          <p class=\"mb-4\" style=\"font-size: 1.2rem; color: #8b0000;\">invite you to celebrate their wedding</p>
+          <div class="countdown-box border border-3 rounded-5 py-4 px-3 px-sm-5 d-inline-block w-100 w-sm-auto" style="background: rgba(255,255,255,0.9); border-color: #d4af37 !important; max-width: 500px;">
+            <p class="mb-3 fw-bold text-center" style="font-size: 0.9rem; color: #8b0000; letter-spacing: 1px;">RECEPTION IN</p>
+            <div class="row g-2 g-sm-3">
+              <div class="col-3 text-center">
+                <p class="mb-0 fw-bold" style="font-size: 1.8rem; font-size: clamp(1.5rem, 5vw, 2.2rem); color: #d4af37;" id="day">0</p>
+                <small style="color: #8b0000; font-weight: 600; font-size: 0.75rem;">Days</small>
+              </div>
+              <div class="col-3 text-center">
+                <p class="mb-0 fw-bold" style="font-size: 1.8rem; font-size: clamp(1.5rem, 5vw, 2.2rem); color: #d4af37;" id="hour">0</p>
+                <small style="color: #8b0000; font-weight: 600; font-size: 0.75rem;">Hours</small>
+              </div>
+              <div class="col-3 text-center">
+                <p class="mb-0 fw-bold" style="font-size: 1.8rem; font-size: clamp(1.5rem, 5vw, 2.2rem); color: #d4af37;" id="minute">0</p>
+                <small style="color: #8b0000; font-weight: 600; font-size: 0.75rem;">Minutes</small>
+              </div>
+              <div class="col-3 text-center">
+                <p class="mb-0 fw-bold" style="font-size: 1.8rem; font-size: clamp(1.5rem, 5vw, 2.2rem); color: #d4af37;" id="second">0</p>
+                <small style="color: #8b0000; font-weight: 600; font-size: 0.75rem;">Seconds</small>
+              </div>
+            </div>
+            <p class="mb-0 mt-3 text-center countdown-note" style="font-size: 0.85rem; font-size: clamp(0.8rem, 2vw, 0.95rem); color: #666;">Reception: 12:00 PM - 3:00 PM</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bride & Groom Section -->
+      <section id="couple" class="py-5" style="background: #f9f5f9;">
+        <div class="container">
+          <h2 class="text-center font-esthetic mb-5" style="font-size: 2.5rem;">The Couple</h2>
+
+          <div class="row g-4 align-items-center">
+            <div class="col-md-6 text-center" data-aos="fade-right">
+              <img src="assets/images/cowo.webp" alt="Metha" class="img-fluid rounded-circle shadow-lg" style="width: 280px; height: 280px; object-fit: cover; border: 5px solid #fff;">
+              <h3 class="font-esthetic mt-4 mb-2" style="font-size: 2rem;">Metha</h3>
+            </div>
+
+            <div class="col-md-6 text-center" data-aos="fade-left">
+              <img src="assets/images/cewe.webp" alt="Mounikasree" class="img-fluid rounded-circle shadow-lg" style="width: 280px; height: 280px; object-fit: cover; border: 5px solid #fff;">
+              <h3 class="font-esthetic mt-4 mb-2" style="font-size: 2rem;">Mounikasree</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Love Story Section -->
+      <section id=\"story\" class=\"py-5\" style=\"background: linear-gradient(135deg, #fef9e7 0%, #f0e6d2 100%);\">
+        <div class="container">
+
+          <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-up">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                  <h5 class="card-title fw-bold mb-2" style="font-size: 0.95rem;"><i class="fas fa-heart text-danger me-2"></i>குறுந்தொகை 40</h5>
+                  <p class="card-text" style="font-size: 0.95rem; line-height: 1.8;">
+                    யாயும் ஞாயும் யார் ஆகியரோ?<br>
+                    எந்தையும் நுந்தையும் எம்முறை கேளிர்?<br>
+                    யானும் நீயும் எவ்வழி அறிதும்?<br>
+                    செம்புலப் பெயல் நீர் போல<br>
+                    அன்புடை நெஞ்சம் தாம் கலந்தனவே.<br>
+                    <span style="font-style: italic; font-size: 0.85rem;">— செம்புலப் பெயனீரார்</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                  <h5 class="card-title fw-bold mb-2"><i class="fas fa-heart text-danger me-2"></i>Growing Together</h5>
+                  <p class="card-text">Every day together makes it special. We learned to support each other, understand one another, and grow together through every step.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                  <h5 class="card-title fw-bold mb-2"><i class="fas fa-heart text-danger me-2"></i>Commitment</h5>
+                  <p class="card-text">With faith and prayer, we decided to build a life together founded on belief and true love for one another.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                  <h5 class="card-title fw-bold mb-2"><i class="fas fa-heart text-danger me-2"></i>Forever</h5>
+                  <p class="card-text">Today, we are ready to start a new chapter of life together, with shared hopes and dreams for the future.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Event Details Section -->
+      <section id="details" class="py-5" style="background: #f9f5f9;">
+        <div class="container">
+          <h2 class="text-center font-esthetic mb-5" style="font-size: 2.5rem;">Event</h2>
+
+          <div class="row g-4">
+            <div class="col-md-6 mx-auto" data-aos="fade-up">
+              <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-5 text-center">
+                  <i class="fas fa-utensils text-danger mb-3" style="font-size: 2.5rem;"></i>
+                  <h4 class="fw-bold mb-2">Reception</h4>
+                  <p style="color: #666;">Friday, May 29, 2026</p>
+                  <p style="font-size: 1.2rem; font-weight: bold;">12:00 PM - 3:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-lg mt-4" data-aos="fade-up">
+            <div class="card-body p-5">
+              <h5 class="card-title fw-bold mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>Venue</h5>
+              <p class="mb-2"><strong>Sakthi Weigh Bridge Marriage Hall</strong></p>
+              <p class="mb-3">Moolapathai, Edappadi - Kalvadangam Road,<br>Tamilnadu - 637101</p>
+              <a href="https://maps.google.com/?q=Sakthi+Weigh+Bridge+Marriage+Hall" target="_blank" class="btn btn-outline-danger rounded-pill">
+                <i class="fas fa-map me-2"></i>View on Google Maps
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section id="footer" class="py-4 text-center" style="background: #222; color: #fff;">
+        <p class="mb-1">Metha & Mounikasree</p>
+        <p class="mb-0" style="font-size: 0.9rem;">Wedding Reception | May 29, 2026</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Tamilnadu, India</p>
+      </section>
+    </div>
+
+    <audio id="bgm" loop autoplay src="assets/music/pure-love-304010.mp3"></audio>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script src="js/ulems.js"></script>
   </body>
 </html>
